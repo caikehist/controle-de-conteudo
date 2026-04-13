@@ -309,9 +309,19 @@
     <div class="container">
         <!-- Menu de Navegação -->
         <nav class="nav-menu">
+            {% if user %}
+            <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
+                <img src="{{ user.foto_url }}" alt="{{ user.nome }}" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
+                <span style="color: white; font-weight: 600;">{{ user.nome }} ({{ user.email }})</span>
+            </div>
             <button class="nav-btn active" onclick="showSection('lista')">📋 Lista de Conteúdos</button>
             <button class="nav-btn" onclick="showSection('novo')">➕ Novo Conteúdo</button>
             <button class="nav-btn" onclick="showSection('importar')">📁 Importar CSV</button>
+            <a href="/logout" class="nav-btn" style="text-decoration: none; background: rgba(220, 53, 69, 0.3);">🚪 Sair</a>
+            {% else %}
+            <div style="flex: 1;"></div>
+            <a href="/login" class="nav-btn" style="text-decoration: none; background: rgba(40, 167, 69, 0.3);">🔐 Login</a>
+            {% endif %}
         </nav>
 
         <!-- Seção: Lista de Conteúdos -->
