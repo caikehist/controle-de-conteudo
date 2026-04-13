@@ -1,99 +1,107 @@
-# Gerenciador de Conteúdo CSV
+# 📚 Sistema de Gestão de Conteúdos
 
-Aplicação web desenvolvida com **FastAPI** (backend Python) e interface moderna em HTML/CSS/JavaScript para gerenciamento de registros de conteúdo educacional.
+Aplicação web completa para gestão de conteúdos educacionais com persistência em banco de dados SQLite.
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-- ✅ Upload de arquivos CSV com drag-and-drop ou seleção de arquivo
-- ✅ Visualização dos dados em tabela interativa
-- ✅ **Clique em qualquer linha**: 
-  - Copia automaticamente o campo "conteúdo" para a área de transferência
-  - Exibe alerta perguntando se o conteúdo foi registrado
-  - Se responder "SIM": a linha fica verde e o campo "registrado" é atualizado
-- ✅ Edição posterior do status de registro
-- ✅ Interface responsiva e moderna com gradientes e animações
-- ✅ Notificações toast para feedback ao usuário
+- **📁 Importação via CSV**: Carregue arquivos CSV com todos os campos necessários
+- **➕ Cadastro Manual**: Formulário completo para cadastro direto na aplicação
+- **✏️ Edição**: Modal de edição para alterar qualquer registro
+- **🗑️ Exclusão**: Remova registros indesejados
+- **📋 Listagem**: Tabela interativa com todos os registros
+- **📝 Registro de Conteúdo**: Clique em uma linha para copiar o conteúdo e marcar como registrado
+- **💾 Persistência**: Dados salvos em banco de dados SQLite
 
-## Requisitos
+## 🚀 Instalação e Execução
 
-- Python 3.8+
-- FastAPI
-- Uvicorn
-- Pandas
-- Python-multipart
-
-## Instalação
+### 1. Instale as dependências
 
 ```bash
-pip install fastapi uvicorn pandas python-multipart
+pip install -r requirements.txt
 ```
 
-## Execução
+### 2. Execute a aplicação
 
 ```bash
-python main.py
+uvicorn main:app --reload
 ```
 
-A aplicação estará disponível em: **http://localhost:8000**
+### 3. Acesse no navegador
 
-## Formato do Arquivo CSV
+```
+http://127.0.0.1:8000
+```
+
+## 📊 Estrutura do CSV
 
 O arquivo CSV deve conter as seguintes colunas:
 
-| Coluna | Descrição |
-|--------|-----------|
-| trimestre | Trimestre letivo (ex: 1º, 2º, 3º) |
-| bimestre | Bimestre letivo (ex: 1º, 2º, 3º, 4º) |
-| data | Data do registro (ex: 2024-02-15) |
-| turma | Turma (ex: 9ºA, 8ºB) |
-| turno | Turno (ex: Matutino, Vespertino) |
-| componente curricular | Nome da disciplina |
-| conteudo | Conteúdo ministrado |
-| registrado | Status (SIM/NÃO) |
-| professor | Nome do professor |
-| escola | Nome da escola |
+```
+trimestre, bimestre, data, turma, turno, componente curricular, conteudo, registrado, professor, escola
+```
 
-### Exemplo de CSV
+### Exemplo de CSV:
 
 ```csv
 trimestre,bimestre,data,turma,turno,componente curricular,conteudo,registrado,professor,escola
-1º,1º,2024-02-15,9ºA,Matutino,História,Revolução Francesa,NÃO,João Silva,Escola Central
+1º Trimestre,1º Bimestre,2024-03-15,9º Ano A,Matutino,Matemática,Equações do segundo grau,NAO,João Silva,Escola Municipal
+2º Trimestre,2º Bimestre,2024-06-20,8º Ano B,Vespertino,História,Revolução Industrial,NAO,Maria Santos,Colégio Estadual
 ```
 
-## Como Usar
+## 🎯 Como Usar
 
-1. **Carregar arquivo**: Arraste e solte seu arquivo CSV na área indicada ou clique em "Selecionar Arquivo"
-2. **Visualizar dados**: Os dados serão exibidos em uma tabela organizada
-3. **Copiar conteúdo**: Clique em qualquer linha para copiar o conteúdo para a área de transferência
-4. **Registrar conteúdo**: Após clicar, confirme no alerta se o conteúdo foi registrado
-   - Se "SIM": A linha ficará verde e o status será atualizado
-   - Se "NÃO": Nada acontece, você pode tentar novamente depois
-5. **Editar posteriormente**: Clique novamente em uma linha já registrada para alterar o status
+### Importar CSV
+1. Clique no menu "📁 Importar CSV"
+2. Arraste o arquivo ou clique para selecionar
+3. Os dados serão importados para o banco de dados
 
-## API Endpoints
+### Cadastrar Manualmente
+1. Clique no menu "➕ Novo"
+2. Preencha todos os campos do formulário
+3. Clique em "💾 Salvar"
+
+### Visualizar e Registrar
+1. Na lista, clique em qualquer linha
+2. O conteúdo será copiado automaticamente para a área de transferência
+3. Um alert perguntará se o conteúdo foi registrado
+4. Se confirmar "OK", a linha ficará verde e o campo "registrado" será "SIM"
+
+### Editar Registro
+1. Na lista, clique no botão "✏️" da linha desejada
+2. Altere os campos no modal que abrirá
+3. Clique em "💾 Salvar Alterações"
+
+### Excluir Registro
+1. Na lista, clique no botão "🗑️" da linha desejada
+2. Confirme a exclusão
+
+## 🗄️ Banco de Dados
+
+Os dados são persistidos no arquivo `conteudos.db` (SQLite), criado automaticamente na primeira execução.
+
+## 📁 Arquivos do Projeto
+
+- `main.py` - Backend FastAPI com rotas e modelo do banco de dados
+- `template.html` - Frontend completo com HTML, CSS e JavaScript
+- `requirements.txt` - Dependências do projeto
+- `exemplo.csv` - Arquivo de exemplo para testes
+- `conteudos.db` - Banco de dados SQLite (criado automaticamente)
+
+## 🔧 Tecnologias Utilizadas
+
+- **Backend**: FastAPI, SQLAlchemy, Pandas
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Banco de Dados**: SQLite
+- **Servidor**: Uvicorn
+
+## 📝 API Endpoints
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
-| GET | `/` | Página principal da aplicação |
-| POST | `/upload` | Upload de arquivo CSV |
-| PUT | `/update/{row_id}` | Atualizar registro de uma linha |
-| GET | `/data` | Obter todos os dados carregados |
-
-## Tecnologias Utilizadas
-
-- **Backend**: FastAPI (Python)
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Processamento de dados**: Pandas
-- **Servidor**: Uvicorn (ASGI)
-
-## Design UI/UX
-
-A interface foi projetada com foco em:
-- **Usabilidade**: Interações claras e feedback imediato
-- **Acessibilidade**: Cores contrastantes e textos legíveis
-- **Estética**: Gradientes modernos, sombras suaves e animações fluidas
-- **Responsividade**: Funciona bem em diferentes tamanhos de tela
-
-## Autor
-
-Desenvolvido como solução para gerenciamento de conteúdos educacionais.
+| GET | `/` | Página principal |
+| POST | `/import-csv` | Importar arquivo CSV |
+| GET | `/api/conteudos/` | Listar todos os conteúdos |
+| POST | `/conteudos/` | Criar novo conteúdo |
+| PUT | `/conteudos/{id}` | Atualizar conteúdo |
+| DELETE | `/conteudos/{id}` | Excluir conteúdo |
+| POST | `/conteudos/{id}/registrar` | Marcar como registrado |
